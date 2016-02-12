@@ -22,9 +22,9 @@ var User = Backbone.Model.extend({
 
 	url: function() {
 		if (this.id) {
-			return Config.baseURL + "confirm/" + this.id;
+			return Config.baseURL + "users/" + this.id;
 		} else {
-			return Config.baseURL + "confirm/";
+			return Config.baseURL + "users/";
 		}
 	},
 

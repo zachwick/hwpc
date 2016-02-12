@@ -45,8 +45,10 @@ urls = (
     '/admin/', 'Admin',
 
     # URI for confirming data entry
-    '/confirm/(\d+)',  'Confirm',
-    '/confirm/(\d+)/', 'Confirm',
+    '/users/', 'Users',
+    '/users',  'Users',
+    '/users/(\d+)',  'SingleUser',
+    '/users/(\d+)/', 'SingleUser',
 
     # URI for performing HTTP Basic Auth
     '/login',  'Login',
@@ -80,7 +82,7 @@ class Index:
         return render.index()
 
 
-class Confirm:
+class SingleUser:
     # Fetch and display a particular user record given by id
     def GET(self, user_id):
         user = model.get_user_by_id(user_id)
@@ -97,11 +99,20 @@ class Confirm:
         else:
             web.ctx.status = '404 Not Found'
             return
-
+    
     # Update an existing given user record by id
     def PUT(self, user_id):
         pass
-    
+
+
+class Users:
+    def POST(self):
+        data = json.loads(web.data())
+        print(data)
+        web.ctx.status = '204 Created'
+        return
+
+
 class Admin:
     # Fetch either the page of all users, or a JSON object of all users
     # The response mime-type is based on the Accept header

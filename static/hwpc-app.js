@@ -12715,9 +12715,9 @@ var User = Backbone.Model.extend({
 
 	url: function() {
 		if (this.id) {
-			return Config.baseURL + "confirm/" + this.id;
+			return Config.baseURL + "users/" + this.id;
 		} else {
-			return Config.baseURL + "confirm/";
+			return Config.baseURL + "users/";
 		}
 	},
 
@@ -12774,15 +12774,74 @@ var AppView = Backbone.View.extend({
 	// This method is the access point of all DOM manipulation by the
 	// AppView object
 	render: function() {
-		this.$el.html(this.template()({
-			
-		}));
+		console.log("in AppView.render");
+		this.$el.html(this.template());
 
 		// Doing a `return this;` at the end of a Backbone View's return
 		// method allows for easier function call chaining
 		return this;
-	}
-	
+	},
+
+	signupUser: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		
+		var fname = this.$("input[name='fname']").val();
+		var lname = this.$("input[name='lname']").val();
+		var address1 = this.$("input[name='address1']").val();
+		var address2 = this.$("input[name='address2']").val();
+		var city = this.$("input[name='city']").val();
+		var state = this.$("input[name='state']").val();
+		var zip = this.$("input[name='zip']").val();
+
+		var is_valid = true;
+
+		/* TODO: Implement client side validation */
+		/*
+		// Check fname and lname for only alpha
+		if (/[\D*\S*\.*]/.test(fname) && /[\D\S\.]/.test(lname)) {
+			is_valid = false;
+			alert("Sorry, but your name may only contain letters and '.'");
+		}
+
+		// Check that address1 is only alphanum, '.', and whitespace
+		if (/[\W\S\.]/.test(address1) && /[\W\S\.]/.test(address2)) {
+			is_valid = false;
+			alert("Sorry, but you address may only contain numbers, letters, spaces, and periods");
+		}
+
+		if (/[\D\S\.]/.test(city)) {
+			is_valid = false;
+			alert("Sorry, but your city may only contain letters, spaces, and periods");
+		}
+
+		if (/[\D*|\[a-zA-Z]3}]/.test(state)) {
+			is_valid = false;
+			alert("Sorry, but your state my only contain a two letter abbreviation");
+		}
+
+		if (/[\D-]|[^\d{5}]|[^\d{5}-\d{4}]/.test(zip)) {
+			is_valid = false;
+			alert("Sorry, but your zip code may only be numbers in the form 12345 or 12345-1234");
+		}
+
+		 console.log("is_valid: ",is_valid);
+		 */
+
+		if (!!is_valid) {
+			var newUser = new User({
+				fname: fname,
+				lname: lname,
+				address1: address1,
+				address2: address2,
+				city: city,
+				state: state,
+				zip: zip
+			});
+			console.log(newUser);
+			newUser.save();
+		}
+	},
 });
 
 /**
