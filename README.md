@@ -101,6 +101,15 @@ curl command) to see a list of all registered users.
 - nginx
 - mysql OR mariadb
 
+## DB Migrations
+
+This project uses yoyo-migrations to do DB migrations and
+rollbacks. From within the top-level directory of the project, execute
+the following:
+
+    yoyo-migrate apply ./migrations mysql://hwpc:""@localhost/hwpc
+
+
 ## Copyright and Licensening
 
 All code is Copyright 2016 zachwick <zach@zachwick.com>
