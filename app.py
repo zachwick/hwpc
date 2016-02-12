@@ -25,6 +25,7 @@ import web
 import re
 import base64
 import model
+import json
 
 '''
 If web.config.debug is not explicitly set to False, sessions will not work.
@@ -36,9 +37,18 @@ web.config.debug = False
 Routing URLS
 '''
 urls = (
+    # URI for adding new users
     '/',       'Index',
+
+    # URI for viewing all users
     '/admin',  'Admin',
     '/admin/', 'Admin',
+
+    # URI for confirming data entry
+    '/confirm/(\d+)',  'Confirm',
+    '/confirm/(\d+)/', 'Confirm',
+
+    # URI for performing HTTP Basic Auth
     '/login',  'Login',
     '/login/', 'Login',
 )
@@ -65,28 +75,57 @@ allowed = (
 )
 
 class Index:
+    # Fetch the page on which to input user record data
     def GET(self):
         return render.index()
 
+
+class Confirm:
+    # Fetch and display a particular user record given by id
+    def GET(self, user_id):
+        user = model.get_user_by_id(user_id)
+
+        if user is not None:
+            accept_header = web.ctx.env.get("HTTP_ACCEPT")
+
+            if accept_header == "text/html":
+                # Show an HTML table
+                return render.confirm(user)
+            elif accept_header == "application/json":
+                # Return a JSON string
+                return json.dumps(user)
+        else:
+            web.ctx.status = '404 Not Found'
+            return
+
+    # Update an existing given user record by id
+    def PUT(self, user_id):
+        pass
+    
 class Admin:
+    # Fetch either the page of all users, or a JSON object of all users
+    # The response mime-type is based on the Accept header
     def GET(self):
         if web.ctx.env.get('HTTP_AUTHORIZATION') is not None:
             data = {
                 "users": model.get_all_users()
             }
 
-            accept_header = web.ctx.env.get("Accept")
+            accept_header = web.ctx.env.get("HTTP_ACCEPT")
 
-            if accept_header is "text/html":
+            if accept_header == "text/html":
                 # Show an HTML table
                 return render.admin(data)
-            elif accept_header is "application/json":
+            elif accept_header == "application/json":
                 # Return a JSON string
                 return json.dumps(data)
             else:
                 # Return a 406 Not Acceptable because the client is
                 # requesting data be returned in a media type that we
                 # don't support
+                print("\n")
+                print(accept_header)
+                print("\n")
                 web.ctx.status = '406 Not Acceptable'
                 return
 
@@ -116,9 +155,9 @@ class Login:
 
 if __name__ == "__main__":
     '''
-    If you are running bareo-stats behind nginx (like we do on api.bareo.io) on
+    If you are running hwpc behind nginx (like we do on hwpc.zachwick.com) on
     your local machine, then you need the following lambda defined.
-    If you are running bareo-stats locally by issuing `python app.py` in a
+    If you are running hwpc locally by issuing `python app.py` in a
     terminal, then you _must_ comment out the lambda definition or your local
     API will error at start up.
     '''

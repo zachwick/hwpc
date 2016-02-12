@@ -26,3 +26,8 @@ import os
 
 db = web.database (dbn='mysql', db="hwpc", user="hwpc", passwd="")
 
+def get_all_users():
+    return "FOUND"
+
+def get_user_by_id(user_id):
+    return "FOUND "+str(user_id)
