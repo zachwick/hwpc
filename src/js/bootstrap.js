@@ -6,4 +6,5 @@
  *
  **/
 
+var page = _(window.location.href.split("/")).last();
 var app = new AppView;

@@ -86,14 +86,15 @@ class SingleUser:
     # Fetch and display a particular user record given by id
     def GET(self, user_id):
         user = model.get_user_by_id(user_id)
-
+        print(user)
         if user is not None:
             accept_header = web.ctx.env.get("HTTP_ACCEPT")
 
-            if accept_header == "text/html":
+            if "text/html" in accept_header:
                 # Show an HTML table
-                return render.confirm(user)
-            elif accept_header == "application/json":
+                print("\nGiving HTML\n")
+                return render.user()
+            elif "application/json" in accept_header:
                 # Return a JSON string
                 return json.dumps(user)
         else:
@@ -120,34 +121,37 @@ class Users:
         web.ctx.status = '201 Created'
         return json.dumps(user)
 
+    def GET(self):
+        data = {
+            "users": model.get_all_users()
+        }
+
+        accept_header = web.ctx.env.get("HTTP_ACCEPT")
+        if accept_header == "text/html":
+            # Show an HTML tabl
+            return render.admi(data)
+        elif accept_header =="application/json":
+            # Return a JSON tring
+            return json.dumps(data)
+        else:
+            # Return a 406 Not Acceptable because the client is
+            # requesting data be returned in a media type that we
+            # don't support
+            print("\n")
+            print(accept_header)
+            print("\n")
+            web.ctx.status = '406 Not Acceptable'
+            return
+
 
 class Admin:
     # Fetch either the page of all users, or a JSON object of all users
     # The response mime-type is based on the Accept header
     def GET(self):
         if web.ctx.env.get('HTTP_AUTHORIZATION') is not None:
-            data = {
-                "users": model.get_all_users()
-            }
-
-            accept_header = web.ctx.env.get("HTTP_ACCEPT")
-
-            if accept_header == "text/html":
-                # Show an HTML table
-                return render.admin(data)
-            elif accept_header == "application/json":
-                # Return a JSON string
-                return json.dumps(data)
-            else:
-                # Return a 406 Not Acceptable because the client is
-                # requesting data be returned in a media type that we
-                # don't support
-                print("\n")
-                print(accept_header)
-                print("\n")
-                web.ctx.status = '406 Not Acceptable'
-                return
-
+            return render.admin()
+        else:
+            raise web.seeother('/login')
         
 class Login:
     def GET(self):
