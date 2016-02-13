@@ -30,4 +30,34 @@ def get_all_users():
     return "FOUND"
 
 def get_user_by_id(user_id):
-    return "FOUND "+str(user_id)
+    user = db.select("User", where="id=$user_id", limit="1",
+                     vars=locals())
+    if len(user) > 0:
+        # db.select returns an iterable, but we want a single obj
+        user = user[0]
+        return user
+    else:
+        # No such User record was found
+        return None
+
+def new_user(data):
+    fname = data['fname']
+    lname = data['lname']
+    address1 = data['address1']
+    address2 = data['address2']
+    city = data['city']
+    state = data['state']
+    zipcode = data['zip']
+    country = data['country']
+
+    # TODO: server-side data validation goes here
+
+    new_user = db.insert('User',
+                         fname=fname,
+                         lname=lname,
+                         address1=address1,
+                         address2=address2,
+                         city=city,
+                         state=state,
+                         zipcode=zipcode)
+    return new_user

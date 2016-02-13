@@ -108,9 +108,17 @@ class SingleUser:
 class Users:
     def POST(self):
         data = json.loads(web.data())
-        print(data)
-        web.ctx.status = '204 Created'
-        return
+        
+        try:
+            new_user = model.new_user(data)
+        except Exception, e:
+            web.ctx.status = '400 Bad Request'
+            return
+
+        user = model.get_user_by_id(new_user)
+
+        web.ctx.status = '201 Created'
+        return json.dumps(user)
 
 
 class Admin:

@@ -27,6 +27,12 @@ var AppView = Backbone.View.extend({
 	// AppView object. Think of it kind of like a C++ constructor.
 	initialize: function(options) {
 		// Ensure that `this` plays nicely inside of each of our AppView's methods
+		this.user = new User();
+
+		this.listenTo(this.user, 'change:id', function() {
+			window.location = this.user.url();
+		});
+		
 		_.bindAll(this,
 		          'signupUser',
 		          'render'
@@ -57,7 +63,7 @@ var AppView = Backbone.View.extend({
 		var address2 = this.$("input[name='address2']").val();
 		var city = this.$("input[name='city']").val();
 		var state = this.$("input[name='state']").val();
-		var zip = this.$("input[name='zip']").val();
+		var zip = this.$("input[name='zipcode']").val();
 
 		var is_valid = true;
 
@@ -94,7 +100,7 @@ var AppView = Backbone.View.extend({
 		 */
 
 		if (!!is_valid) {
-			var newUser = new User({
+			this.user.set({
 				fname: fname,
 				lname: lname,
 				address1: address1,
@@ -103,8 +109,8 @@ var AppView = Backbone.View.extend({
 				state: state,
 				zip: zip
 			});
-			console.log(newUser);
-			newUser.save();
+			console.log(this.user);
+			this.user.save();
 		}
 	},
 });

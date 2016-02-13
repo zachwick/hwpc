@@ -16,7 +16,7 @@ var User = Backbone.Model.extend({
 		address2: "",
 		city: "Anywhere",
 		state: "MI",
-		zip: "12345-1234",
+		zipcode: "12345-1234",
 		country: "USA"
 	},
 
