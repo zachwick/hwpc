@@ -30,7 +30,7 @@
     - GET receives registration page
     - POST posts data
 	    - data is json encoded
-- hwpc.zachwick.com/confirm/<ID>
+- hwpc.zachwick.com/users/<ID>
     - GET shows an unconfirmed data record
     - PUT allows confirming the data record
 	    - data is json encoded
@@ -38,12 +38,7 @@
 	- HTTP Basic Auth (this is a terrible scheme for production admin
       pages, but putting a public admin page out with no auth at all
       feels very irresponsible)
-	- GET displays all data records in an HTML table
-- hwpc.zachwick.com/admin.json
-	- HTTP Basic Auth (this is a terrible scheme for production admin
-      pages, but putting a public admin page out with no auth at all
-      feels very irresponsible)
-	- GET displays all data records as a JSON string
+	- GET returns all data records in a JSON string
 	
 ## Build Requirements
 
