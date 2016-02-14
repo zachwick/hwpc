@@ -6,5 +6,13 @@
  *
  **/
 
-var page = _(window.location.href.split("/")).last();
-var app = new AppView;
+var page = _(_(window.location.href.split("/")).last(2)).first();
+
+if (page === _(_(Config.baseURL.split("/")).last(2)).first()) {
+	var app = new AppView;
+} else if (page == "users") {
+	var user = new UserEditView;
+} else if (page == "admin") {
+	var userlist = new UserListView;
+}
+	

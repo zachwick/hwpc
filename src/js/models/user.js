@@ -36,6 +36,6 @@ var User = Backbone.Model.extend({
 var Users = Backbone.Collection.extend({
 	model: User,
 	url: function() {
-		return false;
+		return Config.baseURL + "users/";
 	}
 });

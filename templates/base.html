@@ -20,6 +20,39 @@ $def with (page)
 		<input type="submit" name="submit" value="submit"/>
 	  </form>
 	</script>
+
+	<script type="text/template" id="user-edit-template">
+	  <form id="signup-form">
+		<span class="confirm-field" id="fname"><%= fname %></span>
+		<input type="text" name="fname" placeholder="First"
+		value="<%= fname %>" class="hidden"/>
+
+		<span class="confirm-field" id="lname"><%= lname %></span>
+		<input type="text" name="lname" placeholder="Last"
+		value="<%= lname %>" class="hidden"/>
+
+		<span class="confirm-field" id="address1"><%= address1 %></span>
+		<input type="text" name="address1" placeholder="Address 1"
+		value="<%= address1 %>" class="hidden"/>
+
+		<span class="confirm-field" id="address2"><%= address2 %></span>
+		<input type="text" name="address2" placeholder="Address 2"
+		value="<%= address2 %>" class="hidden"/>
+
+		<span class="confirm-field" id="city"><%= city %></span>
+		<input type="text" name="city" placeholder="City"
+		value="<%= city %>" class="hidden"/>
+
+		<span class="confirm-field" id="state"><%= state %></span>
+		<input type="text" name="state" placeholder="State"
+		value="<%= state %>" class="hidden"/>
+
+		<span class="confirm-field" id="zipcode"><%= zipcode %></span>
+		<input type="text" name="zipcode" placeholder="Zip"
+		value="<%= zipcode %>" class="hidden"/>
+		<input type="submit" name="submit" value="Confirm"/>
+	  </form>
+	</script>
 	<!-- End JS View Templates -->
   	<!-- Load External JS -->
 	<script src="/static/hwpc-app.js"></script>
