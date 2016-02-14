@@ -20,19 +20,20 @@ var UserListView = Backbone.View.extend({
 	initialize: function(options) {
 		this.users = new Users();
 
-		this.listenTo(this.users, 'sync', this.render);
-
+		this.listenTo(this.users, 'update', this.render);
+		
 		_.bindAll(this,
 		          "render",
 		          "addOneUser",
 		          "addAllUsers",
 		          "getAllUsers"
 		         );
+
+		this.getAllUsers();
 	},
 
 	getAllUsers: function() {
 		this.users.fetch();
-		console.log(this.users);
 	},
 
 	addOneUser: function(user) {
@@ -40,7 +41,7 @@ var UserListView = Backbone.View.extend({
 		this.$(".user-list").append(view.render().el);
 	},
 
-	addAllIUsers: function() {
+	addAllUsers: function() {
 		this.users.each(this.addOneUser, this);
 	},
 

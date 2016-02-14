@@ -12710,7 +12710,8 @@ var User = Backbone.Model.extend({
 		city: "Anywhere",
 		state: "MI",
 		zipcode: "12345-1234",
-		country: "USA"
+		country: "USA",
+		registerDate: ""
 	},
 
 	url: function() {
@@ -12911,7 +12912,9 @@ var UserEditView = Backbone.View.extend({
 
 	// Define any UI events and the functions that are bound to them
 	events: {
-		
+		'click #edit-user': 'toggleUserEdit',
+		'click #cancel-edit': 'toggleUserEdit',
+		'submit #edit-form': 'editUser'
 	},
 	
 	// This UserView.initialize function is called whenever we create a new
@@ -12924,12 +12927,48 @@ var UserEditView = Backbone.View.extend({
 
 		this.listenTo(this.model, 'sync', this.render);
 		_.bindAll(this,
+		          "toggleUserEdit",
+		          "editUser",
 		          'render'
 		         );
 
 		// Fetch the complete record for this user
 		this.model.fetch();
 	},
+
+	toggleUserEdit: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		// Toggle the 'state-hidden' class on all of the #edit-form's children
+		this.$("#edit-form").children().toggleClass("state-hidden");
+
+		// Toggle the 'state-hidden' class on off the span elements, and the button
+		this.$("span").toggleClass("state-hidden");
+		this.$("#edit-user").toggleClass("state-hidden");
+	},
+
+	editUser: function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		this.model.set({
+			fname: this.$("input[name='fname']").val(),
+			lname: this.$("input[name='lname']").val(),
+			address1: this.$("input[name='address1']").val(),
+			address2: this.$("input[name='address2']").val(),
+			city: this.$("input[name='city']").val(),
+			state: this.$("input[name='state']").val(),
+			zipcode: this.$("input[name='zipcode']").val()
+		});
+
+		this.model.save({
+			success: _.bind(function() {
+				this.render();
+			},this)
+		});
+	},
+
 
 	// This method is the access point of all DOM manipulation by the
 	// UserView object
@@ -12965,19 +13004,20 @@ var UserListView = Backbone.View.extend({
 	initialize: function(options) {
 		this.users = new Users();
 
-		this.listenTo(this.users, 'sync', this.render);
-
+		this.listenTo(this.users, 'update', this.render);
+		
 		_.bindAll(this,
 		          "render",
 		          "addOneUser",
 		          "addAllUsers",
 		          "getAllUsers"
 		         );
+
+		this.getAllUsers();
 	},
 
 	getAllUsers: function() {
 		this.users.fetch();
-		console.log(this.users);
 	},
 
 	addOneUser: function(user) {
@@ -12985,7 +13025,7 @@ var UserListView = Backbone.View.extend({
 		this.$(".user-list").append(view.render().el);
 	},
 
-	addAllIUsers: function() {
+	addAllUsers: function() {
 		this.users.each(this.addOneUser, this);
 	},
 
@@ -13007,11 +13047,10 @@ var UserListView = Backbone.View.extend({
 
 var page = _(_(window.location.href.split("/")).last(2)).first();
 
-if (page === _(_(Config.baseURL.split("/")).last(2)).first()) {
-	var app = new AppView;
-} else if (page == "users") {
-	var user = new UserEditView;
-} else if (page == "admin") {
+if (_(window.location.href.split("/")).last() === "admin" || page === "admin") {
 	var userlist = new UserListView;
+} else if (page === "users") {
+	var user = new UserEditView;
+} else if (page === _(_(Config.baseURL.split("/")).last(2)).first()) {
+	var app = new AppView;
 }
-	

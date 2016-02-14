@@ -27,7 +27,8 @@ import os
 db = web.database (dbn='mysql', db="hwpc", user="hwpc", passwd="")
 
 def get_all_users():
-    return "FOUND"
+    users = db.select("User", order="registerDate")
+    return users;
 
 def get_user_by_id(user_id):
     user = db.select("User", where="id=$user_id", limit="1",

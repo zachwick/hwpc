@@ -73,7 +73,7 @@ app = web.application(urls, globals())
 HTTP Basic Auth allowed credential sets
 '''
 allowed = (
-    ('hello',  'world')
+    ('admin', 'admin'),
 )
 
 class Index:
@@ -96,6 +96,7 @@ class SingleUser:
                 return render.user()
             elif "application/json" in accept_header:
                 # Return a JSON string
+                user['registerDate'] = str(user['registerDate'])
                 return json.dumps(user)
         else:
             web.ctx.status = '404 Not Found'
@@ -118,21 +119,35 @@ class Users:
 
         user = model.get_user_by_id(new_user)
 
+        user['registerDate'] = str(user['registerDate'])
+        
         web.ctx.status = '201 Created'
         return json.dumps(user)
 
     def GET(self):
-        data = {
-            "users": model.get_all_users()
-        }
+        ret_users = []
+        users = model.get_all_users()
+
+        for user in users:
+            ret_users.append({
+                "fname": user['fname'],
+                "lname": user['lname'],
+                "address1": user['address1'],
+                "address2": user['address2'],
+                "city": user['city'],
+                "state": user['state'],
+                "zipcode": user['zipcode'],
+                "country": user['country'],
+                "registerDate": str(user['registerDate'])
+            })
 
         accept_header = web.ctx.env.get("HTTP_ACCEPT")
-        if accept_header == "text/html":
+        if "text/html" in accept_header:
             # Show an HTML tabl
-            return render.admi(data)
-        elif accept_header =="application/json":
+            return render.admin()
+        elif "application/json" in accept_header:
             # Return a JSON tring
-            return json.dumps(data)
+            return json.dumps(ret_users)
         else:
             # Return a 406 Not Acceptable because the client is
             # requesting data be returned in a media type that we
@@ -158,20 +173,19 @@ class Login:
         auth = web.ctx.env.get('HTTP_AUTHORIZATION')
         authreq = False
 
-        print("HERE")
-        
         if auth is None:
             authreq = True
         else:
             auth = re.sub('^Basic ', '', auth)
             username, password = base64.decodestring(auth).split(':')
+
             if (username, password) in allowed:
                 raise web.seeother('/admin')
             else:
                 authreq = True
 
         if authreq:
-            web.header('WWW-Authenticate', 'Basic realm="Bareo Stats"')
+            web.header('WWW-Authenticate', 'Basic realm="HWPC Admin"')
             web.ctx.status = '401 Unauthorized'
             return
 
