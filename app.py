@@ -104,7 +104,16 @@ class SingleUser:
     
     # Update an existing given user record by id
     def PUT(self, user_id):
-        pass
+        data = json.loads(web.data())
+        updated_user = model.update_user(data)
+
+        if updated_user:
+            user = model.get_user_by_id(data['id'])
+            user['registerDate'] = str(user['registerDate'])
+            return json.dumps(user)
+        else:
+            web.ctx.status = '500 Internal Server Error'
+            return
 
 
 class Users:

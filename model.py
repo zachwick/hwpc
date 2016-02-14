@@ -41,6 +41,32 @@ def get_user_by_id(user_id):
         # No such User record was found
         return None
 
+def update_user(data):
+    fname = data['fname']
+    lname = data['lname']
+    address1 = data['address1']
+    address2 = data['address2']
+    city = data['city']
+    state = data['state']
+    zipcode = data['zipcode']
+    country = data['country']
+    user_id = data['id']
+    
+    updated = db.update("User", where="id=$user_id",
+                        fname=fname,
+                        lname=lname,
+                        address1=address1,
+                        address2=address2,
+                        city=city,
+                        state=state,
+                        zipcode=zipcode,
+                        vars=locals())
+    if updated > 0:
+        return True
+    else:
+        return False
+                        
+    
 def new_user(data):
     fname = data['fname']
     lname = data['lname']
@@ -48,7 +74,7 @@ def new_user(data):
     address2 = data['address2']
     city = data['city']
     state = data['state']
-    zipcode = data['zip']
+    zipcode = data['zipcode']
     country = data['country']
 
     # TODO: server-side data validation goes here

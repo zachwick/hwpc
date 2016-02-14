@@ -12799,7 +12799,7 @@ var AppView = Backbone.View.extend({
 		var address2 = this.$("input[name='address2']").val();
 		var city = this.$("input[name='city']").val();
 		var state = this.$("input[name='state']").val();
-		var zip = this.$("input[name='zipcode']").val();
+		var zipcode = this.$("input[name='zipcode']").val();
 
 		var is_valid = true;
 
@@ -12843,7 +12843,7 @@ var AppView = Backbone.View.extend({
 				address2: address2,
 				city: city,
 				state: state,
-				zip: zip
+				zipcode: zipcode
 			});
 			console.log(this.user);
 			this.user.save();
