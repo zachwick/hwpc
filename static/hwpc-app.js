@@ -12689,7 +12689,7 @@ var Config = {
  * Uncomment the following line to point the webapp at a non-production
  * API
  **/
-Config.baseURL = Config.localURL;
+//Config.baseURL = Config.localURL;
 
 /**
  * User BackboneJS model for hwpc web client

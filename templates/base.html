@@ -10,14 +10,14 @@ $def with (page)
 	<!-- Begin JS View Templates -->
 	<script type="text/template" id="app-template">
 	  <form id="signup-form">
-		<input type="text" name="fname" placeholder="First"/>
-		<input type="text" name="lname" placeholder="Last"/>
-		<input type="text" name="address1" placeholder="Address 1"/>
-		<input type="text" name="address2" placeholder="Address 2"/>
-		<input type="text" name="city" placeholder="City"/>
-		<input type="text" name="state" placeholder="State"/>
-		<input type="text" name="zipcode" placeholder="Zip"/>
-		<input type="submit" name="submit" value="submit"/>
+		<input type="text" name="fname" placeholder="First"/><br/>
+		<input type="text" name="lname" placeholder="Last"/><br/>
+		<input type="text" name="address1" placeholder="Address 1"/><br/>
+		<input type="text" name="address2" placeholder="Address 2"/><br/>
+		<input type="text" name="city" placeholder="City"/><br/>
+		<input type="text" name="state" placeholder="State"/><br/>
+		<input type="text" name="zipcode" placeholder="Zip"/><br/>
+		<input type="submit" name="submit" value="submit"/><br/>
 	  </form>
 	</script>
 
@@ -28,24 +28,24 @@ $def with (page)
 	  <span class="confirm-field" id="address2"><%= address2 %></span>
 	  <span class="confirm-field" id="city"><%= city %></span>
 	  <span class="confirm-field" id="state"><%= state %></span>
-	  <span class="confirm-field" id="zipcode"><%= zipcode %></span>
+	  <span class="confirm-field" id="zipcode"><%= zipcode %></span><br/>
 	  <button name="edit-user" id="edit-user">Edit</button>
 	  
 	  <form id="edit-form">
 		<input type="text" name="fname" placeholder="First"
-		value="<%= fname %>" class="state-hidden"/>
+		value="<%= fname %>" class="state-hidden"/><br/>
 		<input type="text" name="lname" placeholder="Last"
-		value="<%= lname %>" class="state-hidden"/>
+		value="<%= lname %>" class="state-hidden"/><br/>
 		<input type="text" name="address1" placeholder="Address 1"
-		value="<%= address1 %>" class="state-hidden"/>
+		value="<%= address1 %>" class="state-hidden"/><br/>
 		<input type="text" name="address2" placeholder="Address 2"
-		value="<%= address2 %>" class="state-hidden"/>
+		value="<%= address2 %>" class="state-hidden"/><br/>
 		<input type="text" name="city" placeholder="City"
-		value="<%= city %>" class="state-hidden"/>
+		value="<%= city %>" class="state-hidden"/><br/>
 		<input type="text" name="state" placeholder="State"
-		value="<%= state %>" class="state-hidden"/>
+		value="<%= state %>" class="state-hidden"/><br/>
 		<input type="text" name="zipcode" placeholder="Zip"
-			   value="<%= zipcode %>" class="state-hidden"/>
+			   value="<%= zipcode %>" class="state-hidden"/><br/>
 		<button name="cancel-edit" id="cancel-edit" class="state-hidden">Cancel</button>
 		<input type="submit" name="submit" value="Confirm" class="state-hidden"/>
 	  </form>
