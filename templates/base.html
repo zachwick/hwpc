@@ -22,45 +22,45 @@ $def with (page)
 	</script>
 
 	<script type="text/template" id="user-edit-template">
-	  <span class="confirm-field" id="fname"><%= fname %></span>
-	  <span class="confirm-field" id="lname"><%= lname %></span>
-	  <span class="confirm-field" id="address1"><%= address1 %></span>
-	  <span class="confirm-field" id="address2"><%= address2 %></span>
-	  <span class="confirm-field" id="city"><%= city %></span>
-	  <span class="confirm-field" id="state"><%= state %></span>
-	  <span class="confirm-field" id="zipcode"><%= zipcode %></span><br/>
+	  <span class="confirm-field" id="fname"><%- fname %></span>
+	  <span class="confirm-field" id="lname"><%- lname %></span>
+	  <span class="confirm-field" id="address1"><%- address1 %></span>
+	  <span class="confirm-field" id="address2"><%- address2 %></span>
+	  <span class="confirm-field" id="city"><%- city %></span>
+	  <span class="confirm-field" id="state"><%- state %></span>
+	  <span class="confirm-field" id="zipcode"><%- zipcode %></span><br/>
 	  <button name="edit-user" id="edit-user">Edit</button>
 	  
 	  <form id="edit-form">
 		<input type="text" name="fname" placeholder="First"
-		value="<%= fname %>" class="state-hidden"/><br/>
+		value="<%- fname %>" class="state-hidden"/><br/>
 		<input type="text" name="lname" placeholder="Last"
-		value="<%= lname %>" class="state-hidden"/><br/>
+		value="<%- lname %>" class="state-hidden"/><br/>
 		<input type="text" name="address1" placeholder="Address 1"
-		value="<%= address1 %>" class="state-hidden"/><br/>
+		value="<%- address1 %>" class="state-hidden"/><br/>
 		<input type="text" name="address2" placeholder="Address 2"
-		value="<%= address2 %>" class="state-hidden"/><br/>
+		value="<%- address2 %>" class="state-hidden"/><br/>
 		<input type="text" name="city" placeholder="City"
-		value="<%= city %>" class="state-hidden"/><br/>
+		value="<%- city %>" class="state-hidden"/><br/>
 		<input type="text" name="state" placeholder="State"
-		value="<%= state %>" class="state-hidden"/><br/>
+		value="<%- state %>" class="state-hidden"/><br/>
 		<input type="text" name="zipcode" placeholder="Zip"
-			   value="<%= zipcode %>" class="state-hidden"/><br/>
+			   value="<%- zipcode %>" class="state-hidden"/><br/>
 		<button name="cancel-edit" id="cancel-edit" class="state-hidden">Cancel</button>
 		<input type="submit" name="submit" value="Confirm" class="state-hidden"/>
 	  </form>
 	</script>
 
 	<script type="text/template" id="user-template">
-	  <td class="user-fname"><%= fname %></td>
-	  <td class="user-lname"><%= lname %></td>
-	  <td class="user-address1"><%= address1 %></td>
-	  <td class="user-address2"><%= address2 %></td>
-	  <td class="user-city"><%= city %></td>
-	  <td class="user-state"><%= state %></td>
-	  <td class="user-zipcode"><%= zipcode %></td>
-	  <td class="user-country"><%= country %></td>
-	  <td class="user-registerdate"><%= registerDate %></td>
+	  <td class="user-fname"><%- fname %></td>
+	  <td class="user-lname"><%- lname %></td>
+	  <td class="user-address1"><%- address1 %></td>
+	  <td class="user-address2"><%- address2 %></td>
+	  <td class="user-city"><%- city %></td>
+	  <td class="user-state"><%- state %></td>
+	  <td class="user-zipcode"><%- zipcode %></td>
+	  <td class="user-country"><%- country %></td>
+	  <td class="user-registerdate"><%- registerDate %></td>
 	</script>
 
 	<script type="text/template" id="users-template">
