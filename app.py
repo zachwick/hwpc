@@ -86,13 +86,11 @@ class SingleUser:
     # Fetch and display a particular user record given by id
     def GET(self, user_id):
         user = model.get_user_by_id(user_id)
-        print(user)
         if user is not None:
             accept_header = web.ctx.env.get("HTTP_ACCEPT")
 
             if "text/html" in accept_header:
                 # Show an HTML table
-                print("\nGiving HTML\n")
                 return render.user()
             elif "application/json" in accept_header:
                 # Return a JSON string
@@ -161,9 +159,6 @@ class Users:
             # Return a 406 Not Acceptable because the client is
             # requesting data be returned in a media type that we
             # don't support
-            print("\n")
-            print(accept_header)
-            print("\n")
             web.ctx.status = '406 Not Acceptable'
             return
 
